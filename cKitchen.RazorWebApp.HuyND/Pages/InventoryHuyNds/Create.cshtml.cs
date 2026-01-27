@@ -7,22 +7,44 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using cKitchen.Entities.HuyND.Models;
 using cKitchen.Repositories.HuyND.DBContext;
+using cKitchen.Services.HuyND;
 
 namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
 {
     public class CreateModel : PageModel
     {
-        private readonly cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext _context;
+        //private readonly cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext _context;
+        private readonly IInventoryHuyNDService _inventoryHuyNDService;
+        private readonly InventoryLocationHuyNDService _inventoryLocationHuyNdService;
 
-        public CreateModel(cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext context)
+        //public CreateModel(cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext context)
+        //{
+        //    _context = context;
+        //}
+        public CreateModel(IInventoryHuyNDService inventoryHuyNDService, InventoryLocationHuyNDService inventoryLocationHuyNdService)
         {
-            _context = context;
+            _inventoryHuyNDService = inventoryHuyNDService;
+            _inventoryLocationHuyNdService = inventoryLocationHuyNdService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-        ViewData["CentralKitchenKhaiVpmid"] = new SelectList(_context.CentralKitchenKhaiVpms, "CentralKitchenKhaiVpmid", "CentralKitchenKhaiVpmid");
-        ViewData["InventoryLocationHuyNdid"] = new SelectList(_context.InventoryLocationHuyNds, "InventoryLocationHuyNdid", "InventoryLocationHuyNdid");
+            var InventoryLocationHuyNds = await _inventoryLocationHuyNdService.GetAllAsync();
+            //ViewData["CentralKitchenKhaiVpmid"] = new SelectList(_context.CentralKitchenKhaiVpms, "CentralKitchenKhaiVpmid", "CentralKitchenKhaiVpmid");
+            ViewData["InventoryLocationHuyNdid"] = new SelectList(InventoryLocationHuyNds, "InventoryLocationHuyNdid", "InventoryLocationHuyNdid");
+
+            //Set default value
+            InventoryHuyNd = new InventoryHuyNd()
+            {
+
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
+                IsActive = true,
+                CentralKitchenKhaiVpmid = 1 // Default to 1 for now
+
+            };
+
+            //return Page(newInventoryHuyNd);
             return Page();
         }
 
@@ -36,11 +58,13 @@ namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
             {
                 return Page();
             }
+            var result = await _inventoryHuyNDService.CreateAsync(InventoryHuyNd);
 
-            _context.InventoryHuyNds.Add(InventoryHuyNd);
-            await _context.SaveChangesAsync();
+            if (result > 0) return RedirectToPage("./Index");
+            else return Page();
 
-            return RedirectToPage("./Index");
+            //_context.InventoryHuyNds.Add(InventoryHuyNd);
+            //await _context.SaveChangesAsync();
         }
     }
 }
