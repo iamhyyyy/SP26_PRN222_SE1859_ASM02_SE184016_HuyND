@@ -1,0 +1,91 @@
+﻿@page
+@model cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>InventoryHuyNd</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InventoryHuyNd.ItemName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InventoryHuyNd.ItemName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InventoryHuyNd.Quantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InventoryHuyNd.Quantity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InventoryHuyNd.Unit)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InventoryHuyNd.Unit)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InventoryHuyNd.ExpiryDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InventoryHuyNd.ExpiryDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InventoryHuyNd.BatchNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InventoryHuyNd.BatchNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InventoryHuyNd.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InventoryHuyNd.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InventoryHuyNd.CreatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InventoryHuyNd.CreatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InventoryHuyNd.UpdatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InventoryHuyNd.UpdatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InventoryHuyNd.Cost)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InventoryHuyNd.Cost)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InventoryHuyNd.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InventoryHuyNd.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InventoryHuyNd.CentralKitchenKhaiVpm)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InventoryHuyNd.CentralKitchenKhaiVpm.CentralKitchenKhaiVpmid)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InventoryHuyNd.InventoryLocationHuyNd)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InventoryHuyNd.InventoryLocationHuyNd.InventoryLocationHuyNdid)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.InventoryHuyNd.InventoryHuyNdid">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

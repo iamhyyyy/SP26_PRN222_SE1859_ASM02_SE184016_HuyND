@@ -1,0 +1,90 @@
+﻿@page
+@model cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>InventoryHuyNd</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="InventoryHuyNd.InventoryHuyNdid" />
+            <div class="form-group">
+                <label asp-for="InventoryHuyNd.ItemName" class="control-label"></label>
+                <input asp-for="InventoryHuyNd.ItemName" class="form-control" />
+                <span asp-validation-for="InventoryHuyNd.ItemName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryHuyNd.Quantity" class="control-label"></label>
+                <input asp-for="InventoryHuyNd.Quantity" class="form-control" />
+                <span asp-validation-for="InventoryHuyNd.Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryHuyNd.Unit" class="control-label"></label>
+                <input asp-for="InventoryHuyNd.Unit" class="form-control" />
+                <span asp-validation-for="InventoryHuyNd.Unit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryHuyNd.ExpiryDate" class="control-label"></label>
+                <input asp-for="InventoryHuyNd.ExpiryDate" class="form-control" />
+                <span asp-validation-for="InventoryHuyNd.ExpiryDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryHuyNd.BatchNumber" class="control-label"></label>
+                <input asp-for="InventoryHuyNd.BatchNumber" class="form-control" />
+                <span asp-validation-for="InventoryHuyNd.BatchNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryHuyNd.Status" class="control-label"></label>
+                <input asp-for="InventoryHuyNd.Status" class="form-control" />
+                <span asp-validation-for="InventoryHuyNd.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryHuyNd.CreatedDate" class="control-label"></label>
+                <input asp-for="InventoryHuyNd.CreatedDate" class="form-control" />
+                <span asp-validation-for="InventoryHuyNd.CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryHuyNd.UpdatedDate" class="control-label"></label>
+                <input asp-for="InventoryHuyNd.UpdatedDate" class="form-control" />
+                <span asp-validation-for="InventoryHuyNd.UpdatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryHuyNd.Cost" class="control-label"></label>
+                <input asp-for="InventoryHuyNd.Cost" class="form-control" />
+                <span asp-validation-for="InventoryHuyNd.Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryHuyNd.IsActive" class="control-label"></label>
+                <input asp-for="InventoryHuyNd.IsActive" class="form-control" />
+                <span asp-validation-for="InventoryHuyNd.IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryHuyNd.CentralKitchenKhaiVpmid" class="control-label"></label>
+                <select asp-for="InventoryHuyNd.CentralKitchenKhaiVpmid" class="form-control" asp-items="ViewBag.CentralKitchenKhaiVpmid" ></select>
+                <span asp-validation-for="InventoryHuyNd.CentralKitchenKhaiVpmid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryHuyNd.InventoryLocationHuyNdid" class="control-label"></label>
+                <select asp-for="InventoryHuyNd.InventoryLocationHuyNdid" class="form-control" asp-items="ViewBag.InventoryLocationHuyNdid" ></select>
+                <span asp-validation-for="InventoryHuyNd.InventoryLocationHuyNdid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
