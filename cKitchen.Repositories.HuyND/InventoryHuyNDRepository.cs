@@ -20,14 +20,18 @@ namespace cKitchen.Repositories.HuyND
 
         public async Task<List<InventoryHuyNd>> GetAllAsync()
         {
-            var items = await _context.InventoryHuyNds.Include(c => c.InventoryLocationHuyNd).ToListAsync();
+            var items = await _context.InventoryHuyNds
+                .Include(i => i.CentralKitchenKhaiVpm)
+                .Include(i => i.InventoryLocationHuyNd)
+                .ToListAsync();
             return items ?? new List<InventoryHuyNd>();
         }
 
         public async Task<InventoryHuyNd> GetByIdAsync(int id)
-        {         
+        {
             // FindAsync does not load navigation properties; use Include for Details page
             var item = await _context.InventoryHuyNds
+                .Include(i => i.CentralKitchenKhaiVpm)
                 .Include(i => i.InventoryLocationHuyNd)
                 .FirstOrDefaultAsync(i => i.InventoryHuyNdid == id);
             return item ?? new InventoryHuyNd();
@@ -38,8 +42,9 @@ namespace cKitchen.Repositories.HuyND
         public async Task<List<InventoryHuyNd>> SearchAsync(string batchNum, int quantity, string localName)
         {
             var items = await _context.InventoryHuyNds
+                .Include(i => i.CentralKitchenKhaiVpm)
                 .Include(i => i.InventoryLocationHuyNd)
-                .Where(i => 
+                .Where(i =>
                     (i.BatchNumber.Contains(batchNum) || string.IsNullOrEmpty(batchNum)) &&
                     (i.Quantity == quantity || quantity == 0) &&
                     (i.InventoryLocationHuyNd.LocationName.Contains(localName) || string.IsNullOrEmpty(localName))

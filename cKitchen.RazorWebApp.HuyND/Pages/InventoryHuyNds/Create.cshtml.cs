@@ -31,7 +31,7 @@ namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
         {
             var InventoryLocationHuyNds = await _inventoryLocationHuyNdService.GetAllAsync();
             //ViewData["CentralKitchenKhaiVpmid"] = new SelectList(_context.CentralKitchenKhaiVpms, "CentralKitchenKhaiVpmid", "CentralKitchenKhaiVpmid");
-            ViewData["InventoryLocationHuyNdid"] = new SelectList(InventoryLocationHuyNds, "InventoryLocationHuyNdid", "InventoryLocationHuyNdid");
+            ViewData["InventoryLocationHuyNdid"] = new SelectList(InventoryLocationHuyNds, "InventoryLocationHuyNdid", "LocationName");
 
             //Set default value
             InventoryHuyNd = new InventoryHuyNd()
@@ -56,12 +56,29 @@ namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
         {
             if (!ModelState.IsValid)
             {
+                var inventoryLocationHuyNds = await _inventoryLocationHuyNdService.GetAllAsync();
+                ViewData["InventoryLocationHuyNdid"] = new SelectList(
+                    inventoryLocationHuyNds,
+                    "InventoryLocationHuyNdid",
+                    "LocationName",
+                    InventoryHuyNd?.InventoryLocationHuyNdid
+                );
                 return Page();
             }
             var result = await _inventoryHuyNDService.CreateAsync(InventoryHuyNd);
 
             if (result > 0) return RedirectToPage("./Index");
-            else return Page();
+            else
+            {
+                var inventoryLocationHuyNds = await _inventoryLocationHuyNdService.GetAllAsync();
+                ViewData["InventoryLocationHuyNdid"] = new SelectList(
+                    inventoryLocationHuyNds,
+                    "InventoryLocationHuyNdid",
+                    "LocationName",
+                    InventoryHuyNd?.InventoryLocationHuyNdid
+                );
+                return Page();
+            }
 
             //_context.InventoryHuyNds.Add(InventoryHuyNd);
             //await _context.SaveChangesAsync();
