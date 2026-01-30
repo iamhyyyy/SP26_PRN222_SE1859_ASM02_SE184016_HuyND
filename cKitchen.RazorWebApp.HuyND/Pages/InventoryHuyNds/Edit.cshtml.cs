@@ -47,6 +47,7 @@ namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
             InventoryHuyNd = inventoryhuynd;
             var inventoryLocationHuyNds = await _inventoryLocationHuyNdService.GetAllAsync();
             //ViewData["CentralKitchenKhaiVpmid"] = new SelectList(_context.CentralKitchenKhaiVpms, "CentralKitchenKhaiVpmid", "CentralKitchenKhaiVpmid");
+            ViewData["InventoryLocationHuyNd"] = inventoryhuynd.InventoryLocationHuyNd;
             ViewData["InventoryLocationHuyNdid"] = new SelectList(inventoryLocationHuyNds, "InventoryLocationHuyNdid", "InventoryLocationHuyNdid", inventoryhuynd.InventoryLocationHuyNd.InventoryLocationHuyNdid);
             return Page();
         }

@@ -70,13 +70,17 @@
                             </div>
 
                             <div class="mb-3">
-                                <label asp-for="InventoryHuyNd.CentralKitchenKhaiVpmid" class="form-label fw-semibold"></label>
-                                <select asp-for="InventoryHuyNd.CentralKitchenKhaiVpmid"
-                                        class="form-select"
-                                        asp-items="ViewBag.CentralKitchenKhaiVpmid">
-                                </select>
-                                <span asp-validation-for="InventoryHuyNd.CentralKitchenKhaiVpmid" class="text-danger"></span>
+                                <label asp-for="InventoryHuyNd.CentralKitchenKhaiVpmid"
+                                       class="form-label fw-semibold"></label>
+
+                                <input asp-for="InventoryHuyNd.CentralKitchenKhaiVpmid"
+                                       class="form-control"
+                                       readonly />
+
+                                <span asp-validation-for="InventoryHuyNd.CentralKitchenKhaiVpmid"
+                                      class="text-danger"></span>
                             </div>
+
 
                             <div class="mb-3">
                                 <label asp-for="InventoryHuyNd.InventoryLocationHuyNdid" class="form-label fw-semibold"></label>

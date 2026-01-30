@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using cKitchen.Entities.HuyND.Models;
 using cKitchen.Services.HuyND;
+using Microsoft.AspNetCore.Authorization;
 
 namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
 {
+    [Authorize(Roles = "1,2")]
+    //[Authorize]
     public class IndexModel : PageModel
     {
         //private readonly cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext _context;
