@@ -8,87 +8,89 @@
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>InventoryHuyNd</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryHuyNd.ItemName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InventoryHuyNd.ItemName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryHuyNd.Quantity)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InventoryHuyNd.Quantity)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryHuyNd.Unit)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InventoryHuyNd.Unit)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryHuyNd.ExpiryDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InventoryHuyNd.ExpiryDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryHuyNd.BatchNumber)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InventoryHuyNd.BatchNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryHuyNd.Status)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InventoryHuyNd.Status)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryHuyNd.CreatedDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InventoryHuyNd.CreatedDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryHuyNd.UpdatedDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InventoryHuyNd.UpdatedDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryHuyNd.Cost)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InventoryHuyNd.Cost)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryHuyNd.IsActive)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InventoryHuyNd.IsActive)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryHuyNd.CentralKitchenKhaiVpm)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InventoryHuyNd.CentralKitchenKhaiVpm.CentralKitchenKhaiVpmid)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryHuyNd.InventoryLocationHuyNd)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InventoryHuyNd.InventoryLocationHuyNd.InventoryLocationHuyNdid)
-        </dd>
-    </dl>
-    
-    <form method="post">
-        <input type="hidden" asp-for="InventoryHuyNd.InventoryHuyNdid" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
-    </form>
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">Delete Inventory Item</h4>
+            </div>
+
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> This action cannot be undone.
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-semibold text-muted">Item Name</label>
+                        <div class="form-control bg-light">
+                            @Model.InventoryHuyNd.ItemName
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-semibold text-muted">Quantity</label>
+                        <div class="form-control bg-light">
+                            @Model.InventoryHuyNd.Quantity @Model.InventoryHuyNd.Unit
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-semibold text-muted">Expiry Date</label>
+                        <div class="form-control bg-light">
+                            @Model.InventoryHuyNd.ExpiryDate?.ToString("dd/MM/yyyy")
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-semibold text-muted">Batch Number</label>
+                        <div class="form-control bg-light">
+                            @Model.InventoryHuyNd.BatchNumber
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-semibold text-muted">Cost</label>
+                        <div class="form-control bg-light">
+                            @Model.InventoryHuyNd.Cost
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-semibold text-muted">Status</label>
+                        <div class="form-control bg-light">
+                            @Model.InventoryHuyNd.Status
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-semibold text-muted">Is Active</label>
+                        <div class="form-control bg-light">
+                            @(Model.InventoryHuyNd.IsActive == true ? "Active" : "Inactive")
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="fw-semibold text-muted">Location</label>
+                        <div class="form-control bg-light">
+                            @Model.InventoryHuyNd.InventoryLocationHuyNd?.LocationName
+                        </div>
+                    </div>
+                </div>
+
+                <form method="post" class="d-flex justify-content-end gap-2 mt-4">
+                    <input type="hidden" asp-for="InventoryHuyNd.InventoryHuyNdid" />
+
+                    <a asp-page="./Index" class="btn btn-outline-secondary">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-danger px-4">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+

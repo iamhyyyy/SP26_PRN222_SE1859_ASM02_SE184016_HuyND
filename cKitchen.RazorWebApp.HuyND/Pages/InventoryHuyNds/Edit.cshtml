@@ -9,75 +9,124 @@
 
 <h4>InventoryHuyNd</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="InventoryHuyNd.InventoryHuyNdid" />
-            <div class="form-group">
-                <label asp-for="InventoryHuyNd.ItemName" class="control-label"></label>
-                <input asp-for="InventoryHuyNd.ItemName" class="form-control" />
-                <span asp-validation-for="InventoryHuyNd.ItemName" class="text-danger"></span>
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">Edit Inventory Item</h4>
             </div>
-            <div class="form-group">
-                <label asp-for="InventoryHuyNd.Quantity" class="control-label"></label>
-                <input asp-for="InventoryHuyNd.Quantity" class="form-control" />
-                <span asp-validation-for="InventoryHuyNd.Quantity" class="text-danger"></span>
+
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="InventoryHuyNd.InventoryHuyNdid" />
+
+                    <div class="row">
+                        <!-- LEFT -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="InventoryHuyNd.ItemName" class="form-label fw-semibold"></label>
+                                <input asp-for="InventoryHuyNd.ItemName" class="form-control" />
+                                <span asp-validation-for="InventoryHuyNd.ItemName" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="InventoryHuyNd.Quantity" class="form-label fw-semibold"></label>
+                                <input asp-for="InventoryHuyNd.Quantity" class="form-control" />
+                                <span asp-validation-for="InventoryHuyNd.Quantity" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="InventoryHuyNd.Unit" class="form-label fw-semibold"></label>
+                                <input asp-for="InventoryHuyNd.Unit" class="form-control" />
+                                <span asp-validation-for="InventoryHuyNd.Unit" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="InventoryHuyNd.ExpiryDate" class="form-label fw-semibold"></label>
+                                <input asp-for="InventoryHuyNd.ExpiryDate" type="date" class="form-control" />
+                                <span asp-validation-for="InventoryHuyNd.ExpiryDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="InventoryHuyNd.BatchNumber" class="form-label fw-semibold"></label>
+                                <input asp-for="InventoryHuyNd.BatchNumber" class="form-control" />
+                                <span asp-validation-for="InventoryHuyNd.BatchNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="InventoryHuyNd.Cost" class="form-label fw-semibold"></label>
+                                <input asp-for="InventoryHuyNd.Cost" class="form-control" />
+                                <span asp-validation-for="InventoryHuyNd.Cost" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="InventoryHuyNd.Status" class="form-label fw-semibold"></label>
+                                <input asp-for="InventoryHuyNd.Status" class="form-control" />
+                                <span asp-validation-for="InventoryHuyNd.Status" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="InventoryHuyNd.CentralKitchenKhaiVpmid" class="form-label fw-semibold"></label>
+                                <select asp-for="InventoryHuyNd.CentralKitchenKhaiVpmid"
+                                        class="form-select"
+                                        asp-items="ViewBag.CentralKitchenKhaiVpmid">
+                                </select>
+                                <span asp-validation-for="InventoryHuyNd.CentralKitchenKhaiVpmid" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="InventoryHuyNd.InventoryLocationHuyNdid" class="form-label fw-semibold"></label>
+                                <select asp-for="InventoryHuyNd.InventoryLocationHuyNdid"
+                                        class="form-select"
+                                        asp-items="ViewBag.InventoryLocationHuyNdid">
+                                </select>
+                                <span asp-validation-for="InventoryHuyNd.InventoryLocationHuyNdid" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Is Active</label>
+                                <div class="form-check form-switch">
+                                    <input type="checkbox"
+                                           class="form-check-input"
+                                           name="InventoryHuyNd.IsActive"
+                                           value="true"
+                                    @(Model.InventoryHuyNd.IsActive == true ? "checked" : "") />
+                                    <label class="form-check-label">Active</label>
+                                </div>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label asp-for="InventoryHuyNd.CreatedDate" class="form-label fw-semibold"></label>
+                                <input asp-for="InventoryHuyNd.CreatedDate"
+                                       class="form-control bg-light"
+                                       readonly />
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="InventoryHuyNd.UpdatedDate" class="form-label fw-semibold"></label>
+                                <input asp-for="InventoryHuyNd.UpdatedDate"
+                                       class="form-control bg-light"
+                                       readonly />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a asp-page="./Index" class="btn btn-outline-secondary">
+                            Back
+                        </a>
+                        <button type="submit" class="btn btn-warning px-4">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="InventoryHuyNd.Unit" class="control-label"></label>
-                <input asp-for="InventoryHuyNd.Unit" class="form-control" />
-                <span asp-validation-for="InventoryHuyNd.Unit" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InventoryHuyNd.ExpiryDate" class="control-label"></label>
-                <input asp-for="InventoryHuyNd.ExpiryDate" type="date" class="form-control" />
-                <span asp-validation-for="InventoryHuyNd.ExpiryDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InventoryHuyNd.BatchNumber" class="control-label"></label>
-                <input asp-for="InventoryHuyNd.BatchNumber" class="form-control" />
-                <span asp-validation-for="InventoryHuyNd.BatchNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InventoryHuyNd.Status" class="control-label"></label>
-                <input asp-for="InventoryHuyNd.Status" class="form-control" />
-                <span asp-validation-for="InventoryHuyNd.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InventoryHuyNd.CreatedDate" class="control-label"></label>
-                <input asp-for="InventoryHuyNd.CreatedDate" class="form-control" />
-                <span asp-validation-for="InventoryHuyNd.CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InventoryHuyNd.UpdatedDate" class="control-label"></label>
-                <input asp-for="InventoryHuyNd.UpdatedDate" class="form-control" />
-                <span asp-validation-for="InventoryHuyNd.UpdatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InventoryHuyNd.Cost" class="control-label"></label>
-                <input asp-for="InventoryHuyNd.Cost" class="form-control" />
-                <span asp-validation-for="InventoryHuyNd.Cost" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InventoryHuyNd.IsActive" class="control-label"></label>
-                <input asp-for="InventoryHuyNd.IsActive" class="form-control" />
-                <span asp-validation-for="InventoryHuyNd.IsActive" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InventoryHuyNd.CentralKitchenKhaiVpmid" class="control-label"></label>
-                <select asp-for="InventoryHuyNd.CentralKitchenKhaiVpmid" class="form-control" asp-items="ViewBag.CentralKitchenKhaiVpmid" ></select>
-                <span asp-validation-for="InventoryHuyNd.CentralKitchenKhaiVpmid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InventoryHuyNd.InventoryLocationHuyNdid" class="control-label"></label>
-                <select asp-for="InventoryHuyNd.InventoryLocationHuyNdid" class="form-control" asp-items="ViewBag.InventoryLocationHuyNdid" ></select>
-                <span asp-validation-for="InventoryHuyNd.InventoryLocationHuyNdid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 

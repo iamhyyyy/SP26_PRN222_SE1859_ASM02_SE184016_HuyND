@@ -7,17 +7,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using cKitchen.Entities.HuyND.Models;
 using cKitchen.Repositories.HuyND.DBContext;
+using cKitchen.Services.HuyND;
 
 namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
 {
     public class DeleteModel : PageModel
     {
-        private readonly cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext _context;
+        //private readonly cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext _context;
+        private readonly IInventoryHuyNDService _inventoryHuyNDService;
 
-        public DeleteModel(cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext context)
-        {
-            _context = context;
-        }
+        //public DeleteModel(cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext context)
+        //{
+        //    _context = context;
+        //}
+        public DeleteModel(IInventoryHuyNDService inventoryHuyNDService) => _inventoryHuyNDService = inventoryHuyNDService;
 
         [BindProperty]
         public InventoryHuyNd InventoryHuyNd { get; set; } = default!;
@@ -29,7 +32,8 @@ namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
                 return NotFound();
             }
 
-            var inventoryhuynd = await _context.InventoryHuyNds.FirstOrDefaultAsync(m => m.InventoryHuyNdid == id);
+            //var inventoryhuynd = await _context.InventoryHuyNds.FirstOrDefaultAsync(m => m.InventoryHuyNdid == id);
+            var inventoryhuynd = await _inventoryHuyNDService.GetByIdAsync(id.Value);
 
             if (inventoryhuynd == null)
             {
@@ -39,6 +43,8 @@ namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
             {
                 InventoryHuyNd = inventoryhuynd;
             }
+
+
             return Page();
         }
 
@@ -49,12 +55,18 @@ namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
                 return NotFound();
             }
 
-            var inventoryhuynd = await _context.InventoryHuyNds.FindAsync(id);
-            if (inventoryhuynd != null)
+            //var inventoryhuynd = await _context.InventoryHuyNds.FindAsync(id);
+            //if (inventoryhuynd != null)
+            //{
+            //    InventoryHuyNd = inventoryhuynd;
+            //    _context.InventoryHuyNds.Remove(InventoryHuyNd);
+            //    await _context.SaveChangesAsync();
+            //}
+
+            var result = await _inventoryHuyNDService.DeleteAsync(id.Value);
+            if (!result)
             {
-                InventoryHuyNd = inventoryhuynd;
-                _context.InventoryHuyNds.Remove(InventoryHuyNd);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
 
             return RedirectToPage("./Index");

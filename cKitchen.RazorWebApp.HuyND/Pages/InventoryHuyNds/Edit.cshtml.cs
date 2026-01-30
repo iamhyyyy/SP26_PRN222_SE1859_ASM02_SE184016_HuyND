@@ -8,16 +8,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using cKitchen.Entities.HuyND.Models;
 using cKitchen.Repositories.HuyND.DBContext;
+using cKitchen.Services.HuyND;
 
 namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
 {
     public class EditModel : PageModel
     {
-        private readonly cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext _context;
+        //private readonly cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext _context;
+        private readonly IInventoryHuyNDService _inventoryHuyNDService;
+        private readonly InventoryLocationHuyNDService _inventoryLocationHuyNdService;
 
-        public EditModel(cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext context)
+        //public EditModel(cKitchen.Repositories.HuyND.DBContext.CentralKitchenFranchiseDBContext context)
+        //{
+        //    _context = context;
+        //}
+        public EditModel(IInventoryHuyNDService inventoryHuyNDService, InventoryLocationHuyNDService inventoryLocationHuyNdService)
         {
-            _context = context;
+            _inventoryHuyNDService = inventoryHuyNDService;
+            _inventoryLocationHuyNdService = inventoryLocationHuyNdService;
         }
 
         [BindProperty]
@@ -30,14 +38,16 @@ namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
                 return NotFound();
             }
 
-            var inventoryhuynd =  await _context.InventoryHuyNds.FirstOrDefaultAsync(m => m.InventoryHuyNdid == id);
+            //var inventoryhuynd = await _context.InventoryHuyNds.FirstOrDefaultAsync(m => m.InventoryHuyNdid == id); 
+            var inventoryhuynd = await _inventoryHuyNDService.GetByIdAsync(id.Value);
             if (inventoryhuynd == null)
             {
                 return NotFound();
             }
             InventoryHuyNd = inventoryhuynd;
-           ViewData["CentralKitchenKhaiVpmid"] = new SelectList(_context.CentralKitchenKhaiVpms, "CentralKitchenKhaiVpmid", "CentralKitchenKhaiVpmid");
-           ViewData["InventoryLocationHuyNdid"] = new SelectList(_context.InventoryLocationHuyNds, "InventoryLocationHuyNdid", "InventoryLocationHuyNdid");
+            var inventoryLocationHuyNds = await _inventoryLocationHuyNdService.GetAllAsync();
+            //ViewData["CentralKitchenKhaiVpmid"] = new SelectList(_context.CentralKitchenKhaiVpms, "CentralKitchenKhaiVpmid", "CentralKitchenKhaiVpmid");
+            ViewData["InventoryLocationHuyNdid"] = new SelectList(inventoryLocationHuyNds, "InventoryLocationHuyNdid", "InventoryLocationHuyNdid", inventoryhuynd.InventoryLocationHuyNd.InventoryLocationHuyNdid);
             return Page();
         }
 
@@ -50,30 +60,36 @@ namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
                 return Page();
             }
 
-            _context.Attach(InventoryHuyNd).State = EntityState.Modified;
+            //_context.Attach(InventoryHuyNd).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!InventoryHuyNdExists(InventoryHuyNd.InventoryHuyNdid))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!InventoryHuyNdExists(InventoryHuyNd.InventoryHuyNdid))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
 
-            return RedirectToPage("./Index");
+            var result = await _inventoryHuyNDService.UpdateAsync(InventoryHuyNd);
+            if(result > 0)
+            {
+                return RedirectToPage("./Index");
+            }
+            return Page();
+
         }
 
-        private bool InventoryHuyNdExists(int id)
-        {
-            return _context.InventoryHuyNds.Any(e => e.InventoryHuyNdid == id);
-        }
+        //private bool InventoryHuyNdExists(int id)
+        //{
+        //    return _context.InventoryHuyNds.Any(e => e.InventoryHuyNdid == id);
+        //}
     }
 }
