@@ -88,9 +88,35 @@
                     <button type="submit" class="btn btn-danger px-4">
                         Delete
                     </button>
+
+                    <input type="button" id="btnDeleteSignalR" value="Delete by Signal"
                 </form>
             </div>
         </div>
     </div>
 </div>
 
+
+<script src ="~/js/signalr/dist/browser/signalr.js"> </script>
+<script>
+        "use strict";
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/cKitchenHub").build();
+
+    connection.start().then(function () {
+        console.log("HuyND: Connected to the SignalR Hub");
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    document.getElementById("btnDeleteSignalR").addEventListener("click", function (event) {
+
+        var dataObj = document.getElementById("InventoryHuyND_InventoryHuyNDId").value;
+        console.log(dataObj);
+
+        connection.invoke("HubDelete_InventoryHuyND", dataObj).catch(function (err) {
+            return console.error(err.toString());
+        });
+        event.preventDefault();
+    });
+</script>

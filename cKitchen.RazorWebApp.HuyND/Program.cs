@@ -1,3 +1,4 @@
+using cKitchen.RazorWebApp.HuyND.Hubs;
 using cKitchen.Services.HuyND;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -15,6 +16,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Account/Forbidden";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
     });
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -36,5 +39,7 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.MapRazorPages().RequireAuthorization();
+
+app.MapHub<cKitchenHub>("/cKitchenHub");
 
 app.Run();
