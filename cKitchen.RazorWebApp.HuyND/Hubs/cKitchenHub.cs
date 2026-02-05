@@ -17,10 +17,11 @@ namespace cKitchen.RazorWebApp.HuyND.Hubs
 
         public async Task HubDelete_InventoryHuyND(int inventoryHuyNDId) 
         {
-            await Clients.All.SendAsync("ReceiveDelete_InventoryHuyND", inventoryHuyNDId);
-
-            _inventoryHuyNDService.DeleteAsync(inventoryHuyNDId);
             
+
+            await Clients.All.SendAsync("ReceiverDelete_InventoryHuyND", inventoryHuyNDId);
+
+            await _inventoryHuyNDService.DeleteAsync(inventoryHuyNDId);
         }
     }
 }

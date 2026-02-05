@@ -21,6 +21,7 @@
             <table class="table table-striped table-hover mb-0 align-middle table-bordered text-center">
                 <thead class="table-dark">
                     <tr class="text-center">
+                        <th>ID</th>
                         <th>Item Name</th>
                         <th>Qty</th>
                         <th>Unit</th>
@@ -36,7 +37,9 @@
                 <tbody id="inventory-table-body">
                     @foreach (var item in Model.InventoryHuyNd)
                     {
-                        <tr class="inventory-row">
+                        <tr id="@item.InventoryHuyNdid" class="inventory-row">
+                            <td class="text-center">@item.InventoryHuyNdid</td>
+
                             <td class="fw-semibold">@item.ItemName</td>
 
                             <td class="text-center">@item.Quantity</td>
@@ -170,3 +173,20 @@
         });
     </script>
 }
+<script src="~/js/signalr/dist/browser/signalr.js"> </script>
+<script>
+    "use strict";
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/cKitchenHub").build();
+
+    connection.start().then(function () {
+        console.log("HuyND: Connected to the SignalR Hub");
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    connection.on("ReceiverDelete_InventoryHuyND", function (InventoryHuyNDId) {
+        //alert($(`#${CashDepositSlipId}`).value);
+        $('#inventory-table-body').find(`tr[id='${InventoryHuyNDId}']`).remove();
+    });
+</script>

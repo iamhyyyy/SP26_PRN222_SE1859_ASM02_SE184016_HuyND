@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds.DeleteModel
 
 @{
@@ -89,7 +89,7 @@
                         Delete
                     </button>
 
-                    <input type="button" id="btnDeleteSignalR" value="Delete by Signal"
+                    <input type="button" id="btnDeleteSignalR" value="Delete by Signal" />
                 </form>
             </div>
         </div>
@@ -110,13 +110,28 @@
     });
 
     document.getElementById("btnDeleteSignalR").addEventListener("click", function (event) {
-
-        var dataObj = document.getElementById("InventoryHuyND_InventoryHuyNDId").value;
-        console.log(dataObj);
-
-        connection.invoke("HubDelete_InventoryHuyND", dataObj).catch(function (err) {
-            return console.error(err.toString());
-        });
         event.preventDefault();
+
+        // Lấy ID và chuyển sang kiểu số trước khi gửi lên Hub
+        var idValue = document.getElementById("InventoryHuyNd_InventoryHuyNdid").value;
+        var inventoryId = parseInt(idValue, 10);
+
+        if (isNaN(inventoryId)) {
+            console.error("InventoryHuyNDId is not a valid number:", idValue);
+            return;
+        }
+
+        console.log("Deleting InventoryHuyND with id:", inventoryId);
+
+        connection.invoke("HubDelete_InventoryHuyND", inventoryId)
+            .then(function () {
+                // quay về trang Index
+                window.location.href = "/InventoryHuyNds/Index";
+            })
+            .catch(function (err) {
+                console.error(err.toString());
+            });
+
     });
 </script>
+
