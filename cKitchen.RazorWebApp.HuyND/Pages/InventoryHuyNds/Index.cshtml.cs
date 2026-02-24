@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,16 +23,36 @@ namespace cKitchen.RazorWebApp.HuyND.Pages.InventoryHuyNds
         //    _context = context;
         //}
         public IndexModel(IInventoryHuyNDService inventoryHuyNDService) => _inventoryHuyNDService = inventoryHuyNDService;
-        
 
-        public IList<InventoryHuyNd> InventoryHuyNd { get;set; } = default!;
+
+        // Always initialize to avoid NullReference in Razor (@foreach)
+        public IList<InventoryHuyNd> InventoryHuyNd { get; set; } = new List<InventoryHuyNd>();
+
+        //public async Task OnGetAsync()
+        //{
+        //    //InventoryHuyNd = await _context.InventoryHuyNds
+        //    //    .Include(i => i.CentralKitchenKhaiVpm)
+        //    //    .Include(i => i.InventoryLocationHuyNd).ToListAsync();
+        //    InventoryHuyNd = await _inventoryHuyNDService.GetAllAsync();
+        //}
 
         public async Task OnGetAsync()
         {
             //InventoryHuyNd = await _context.InventoryHuyNds
             //    .Include(i => i.CentralKitchenKhaiVpm)
             //    .Include(i => i.InventoryLocationHuyNd).ToListAsync();
-            InventoryHuyNd = await _inventoryHuyNDService.GetAllAsync();
+            var batchNum = (string?)Request.Query["batchNum"];
+            var localName = (string?)Request.Query["localName"];
+
+            var quantityRaw = (string?)Request.Query["quantity"];
+            var quantity = int.TryParse(quantityRaw, out var q) ? q : 0;
+
+            InventoryHuyNd = await _inventoryHuyNDService.SearchAsync(
+                batchNum: (batchNum ?? string.Empty).Trim(),
+                quantity: quantity,
+                localName: (localName ?? string.Empty).Trim()
+            ) ?? new List<InventoryHuyNd>();
+
         }
     }
 }

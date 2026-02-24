@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -45,9 +45,10 @@ namespace cKitchen.Repositories.HuyND
                 .Include(i => i.CentralKitchenKhaiVpm)
                 .Include(i => i.InventoryLocationHuyNd)
                 .Where(i =>
-                    (i.BatchNumber.Contains(batchNum) || string.IsNullOrEmpty(batchNum)) &&
+                    ((i.BatchNumber != null && i.BatchNumber.Contains(batchNum)) || string.IsNullOrEmpty(batchNum)) &&
                     (i.Quantity == quantity || quantity == 0) &&
-                    (i.InventoryLocationHuyNd.LocationName.Contains(localName) || string.IsNullOrEmpty(localName))
+                    (((i.InventoryLocationHuyNd != null) && (i.InventoryLocationHuyNd.LocationName != null) && i.InventoryLocationHuyNd.LocationName.Contains(localName))
+                        || string.IsNullOrEmpty(localName))
                 ).ToListAsync();
 
             return items ?? new List<InventoryHuyNd>();
