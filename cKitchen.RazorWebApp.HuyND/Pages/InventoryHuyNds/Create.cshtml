@@ -113,6 +113,7 @@
                         <button type="submit" class="btn btn-primary px-4">
                             Create
                         </button>
+                        <input type="button" id="btnHubCreate" value="Create by signalr" />
                     </div>
                 </form>
             </div>
@@ -127,3 +128,46 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+// ....
+<script>
+        "use strict";
+
+        var connection = new signalR.HubConnectionBuilder().withUrl("/ckitchenHub").build();
+
+        connection.start().then(function () {
+            console.log("Connected to the SignalR Hub");
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        document.getElementById("btnHubCreate").addEventListener("click", function (event) {
+
+            var dataObj = JSON.stringify({
+                ItemName: document.getElementById("InventoryHuyNd_ItemName").value,
+                Quantity: document.getElementById("InventoryHuyNd_Quantity").value,
+                Unit: document.getElementById("InventoryHuyNd_Unit").value,
+                ExpiryDate: document.getElementById("InventoryHuyNd_ExpiryDate").value,
+                BatchNumber: document.getElementById("InventoryHuyNd_BatchNumber").value,
+
+                Cost: document.getElementById("InventoryHuyNd_Cost").value,
+                Status: document.getElementById("InventoryHuyNd_Status").value,
+                InventoryLocationHuyNdid: document.getElementById("InventoryHuyNd_InventoryLocationHuyNdid").value,
+
+                CentralKitchenKhaiVpmid: document.getElementById("InventoryHuyNd_CentralKitchenKhaiVpmid").value,
+                CreatedDate: document.getElementById("InventoryHuyNd_CreatedDate").value,
+                UpdatedDate: document.getElementById("InventoryHuyNd_UpdatedDate").value,
+                IsActive: document.getElementById("InventoryHuyNd_IsActive").value
+            });
+
+            //console.log(dataObj);
+
+        connection.invoke("HubCreate_InventoryHuyND", dataObj).catch(function (err) {
+                return console.error(err.toString());
+            });
+            event.preventDefault();
+
+        });
+
+</script>

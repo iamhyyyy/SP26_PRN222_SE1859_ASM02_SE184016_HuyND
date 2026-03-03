@@ -15,26 +15,36 @@
             </div>
 
             <div class="card-body">
-                <div class="row">
+                <div class="row" id="inventoryId">
                     <!-- LEFT -->
                     <div class="col-md-6">
+
+                        <div class="mb-3" >
+							<label class="fw-semibold text-muted">Inventory ID</label>
+							<div class="form-control bg-light">
+								@Html.HiddenFor(model => model.InventoryHuyNd.InventoryHuyNdid)
+								@Model.InventoryHuyNd.InventoryHuyNdid
+							</div>
+                        </div>
+                        
                         <div class="mb-3">
                             <label class="fw-semibold text-muted">Item Name</label>
-                            <div class="form-control bg-light">
+                            <div class="form-control bg-light" id="itemName">
+								
                                 @Model.InventoryHuyNd.ItemName
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="fw-semibold text-muted">Quantity</label>
-                            <div class="form-control bg-light">
+                            <div class="form-control bg-light" id="quantity">
                                 @Model.InventoryHuyNd.Quantity
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="fw-semibold text-muted">Unit</label>
-                            <div class="form-control bg-light">
+                            <div class="form-control bg-light" id="unit">
                                 @Model.InventoryHuyNd.Unit
                             </div>
                         </div>
@@ -58,14 +68,14 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="fw-semibold text-muted">Status</label>
-                            <div class="form-control bg-light">
+                            <div class="form-control bg-light" id="status">
                                 @Model.InventoryHuyNd.Status
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="fw-semibold text-muted">Cost</label>
-                            <div class="form-control bg-light">
+                            <div class="form-control bg-light" id="cost">
                                 @Model.InventoryHuyNd.Cost
                             </div>
                         </div>
@@ -127,3 +137,51 @@
     <a asp-page="./Edit" asp-route-id="@Model.InventoryHuyNd.InventoryHuyNdid">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script>
+    "use strict";
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/cKitchenHub").build();
+
+    connection.start().then(function () {
+        console.log("HuyND: Connected to the SignalR Hub");
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    connection.on("ReceiverDelete_InventoryHuyND", function (InventoryHuyNdId) {
+        //alert($(`#${CashDepositSlipId}`).value);
+
+        var inventoryIdHidden = document.getElementById("InventoryHuyNd_InventoryHuyNdid").value;
+
+        if (inventoryIdHidden == InventoryHuyNdId) {
+            document.getElementById("inventoryId").innerHTML = "This item had deleted";
+        } else {
+            //alert($(`#${CashDepositSlipId}`).value + " not found");
+            alert(InventoryHuyNdId + " not found");
+        }
+    });
+
+    connection.on("ReceiverUpdate_InventoryHuyND", function (item) {
+
+        console.log("Inventory updated:", item);
+
+        // Lấy id hiện tại từ hidden field
+        var currentId = document.getElementById("InventoryHuyNd_InventoryHuyNdid").value;
+
+        // Chỉ update nếu đúng record
+        if (currentId == item.inventoryHuyNdid) {
+
+            document.getElementById("itemName").innerHTML = item.itemName;
+            document.getElementById("quantity").innerHTML = item.quantity;
+            document.getElementById("unit").innerHTML = item.unit;
+            document.getElementById("cost").innerHTML = item.cost;
+            document.getElementById("status").innerHTML = item.status;
+
+            console.log("Updated current inventory detail page");
+        }
+    });
+
+
+</script>

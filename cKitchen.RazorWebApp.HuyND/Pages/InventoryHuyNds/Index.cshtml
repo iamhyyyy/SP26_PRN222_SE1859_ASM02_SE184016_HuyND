@@ -213,6 +213,7 @@
         });
     </script>
 }
+
 <script src="~/js/signalr/dist/browser/signalr.js"> </script>
 <script>
     "use strict";
@@ -229,4 +230,46 @@
         //alert($(`#${CashDepositSlipId}`).value);
         $('#inventory-table-body').find(`tr[id='${InventoryHuyNDId}']`).remove();
     });
+
+    connection.on("ReceiverCreate_InventoryHuyND", function (item) {
+
+        var expiryDate = item.expiryDate
+            ? new Date(item.expiryDate).toLocaleDateString("vi-VN")
+            : "";
+
+        var costFormatted = item.cost
+            ? Number(item.cost).toLocaleString("vi-VN")
+            : "0";
+
+        var activeBadge = item.isActive
+            ? '<span class="badge bg-success">Active</span>'
+            : '<span class="badge bg-secondary">Inactive</span>';
+
+        var newRow = `
+            <tr id="${item.inventoryHuyNdid}" class="inventory-row bg-warning fw-bold">
+                <td>${item.inventoryHuyNdid}</td>
+                <td>${item.itemName}</td>
+                <td>${item.quantity}</td>
+                <td>${item.unit}</td>
+                <td>${expiryDate}</td>
+                <td>${item.batchNumber ?? ""}</td>
+                <td><span class="badge bg-info">${item.status ?? ""}</span></td>
+                <td>${costFormatted}</td>
+                <td>${activeBadge}</td>
+                <td>${item.inventoryLocationHuyNd?.locationName ?? ""}</td>
+                <td>
+                    <a href="/InventoryHuyNds/Edit?id=${item.inventoryHuyNdid}"
+                       class="btn btn-sm btn-warning me-1">Edit</a>
+                    <a href="/InventoryHuyNds/Details?id=${item.inventoryHuyNdid}"
+                       class="btn btn-sm btn-info me-1">View</a>
+                    <a href="/InventoryHuyNds/Delete?id=${item.inventoryHuyNdid}"
+                       class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        `;
+
+        $('#inventory-table-body').prepend(newRow);
+    });
+
+
 </script>
